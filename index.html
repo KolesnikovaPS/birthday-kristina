@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>С Днём Рождения, Кристиша! 🎂</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Caveat:wght@400;700&family=Dancing+Script:wght@700&family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Cormorant Garamond', serif;
+    background: #fdf6f8;
+    overflow-x: hidden;
+    position: relative;
+    color: #5a2d3e;
+}
+
+.retro-bg {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: 
+        linear-gradient(rgba(253, 246, 248, 0.92), rgba(253, 246, 248, 0.92)),
+        repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(194, 123, 160, 0.12) 40px, rgba(194, 123, 160, 0.12) 42px),
+        repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(194, 123, 160, 0.12) 40px, rgba(194, 123, 160, 0.12) 42px);
+    z-index: -2;
+}
+
+.floating-element {
+    position: fixed;
+    font-size: 1.5rem;
+    opacity: 0.5;
+    animation: floatRetro 25s infinite ease-in-out;
+    z-index: -1;
+    pointer-events: none;
+}
+
+@keyframes floatRetro {
+    0%, 100% { transform: translate(0, 0) rotate(0deg); }
+    33% { transform: translate(40px, -40px) rotate(120deg); }
+    66% { transform: translate(-30px, -60px) rotate(240deg); }
+}
+
+.screen {
+    min-height: 100vh;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    position: relative;
+    z-index: 10;
+    animation: fadeInScreen 1.2s ease;
+}
+
+.screen.active { display: flex; }
+
+@keyframes fadeInScreen {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.retro-card {
+    background: #fff;
+    border: 3px solid #c27ba0;
+    padding: 50px;
+    max-width: 700px;
+    width: 100%;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(194, 123, 160, 0.15), inset 0 0 0 8px #fff, inset 0 0 0 10px #c27ba0;
+    animation: cardAppear 1.5s ease;
+    border-radius: 4px;
+}
+
+@keyframes cardAppear {
+    from { opacity: 0; transform: scale(0.9) rotate(-2deg); }
+    to { opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+.main-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(3rem, 9vw, 5.5rem);
+    color: #a85d7c;
+    text-align: center;
+    margin-bottom: 30px;
+    line-height: 1.2;
+}
+
+.subtitle {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(1.3rem, 3.5vw, 1.8rem);
+    color: #8a5a6e;
+    text-align: center;
+    margin-bottom: 40px;
+    font-style: italic;
+    line-height: 1.6;
+}
+
+.age-card {
+    background: linear-gradient(135deg, #fdf6f8, #f4e4ea);
+    border: 2px solid #c27ba0;
+    padding: 40px;
+    text-align: center;
+    margin: 30px 0;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(194, 123, 160, 0.1);
+    border-radius: 8px;
+}
+
+.age-card::before, .age-card::after {
+    content: '🌸';
+    position: absolute;
+    font-size: 1.8rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+.age-card::before { left: 20px; }
+.age-card::after { right: 20px; }
+
+.age-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(5rem, 18vw, 9rem);
+    font-weight: 700;
+    color: #a85d7c;
+    line-height: 1;
+    margin: 20px 0;
+}
+
+.age-text {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: #8a5a6e;
+    margin-top: 15px;
+    line-height: 1.6;
+}
+
+.btn {
+    background: #c27ba0;
+    color: #fff;
+    border: 2px solid #c27ba0;
+    padding: 18px 50px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.4s ease;
+    margin-top: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    border-radius: 50px;
+}
+
+.btn:hover {
+    background: #fff;
+    color: #c27ba0;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(194, 123, 160, 0.3);
+}
+
+.gallery-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: clamp(2.5rem, 7vw, 4rem);
+    color: #a85d7c;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 35px;
+    max-width: 900px;
+    width: 100%;
+    padding: 20px;
+}
+
+.polaroid {
+    background: #fff;
+    padding: 15px 15px 45px 15px;
+    box-shadow: 0 12px 35px rgba(194, 123, 160, 0.2);
+    transition: all 0.5s ease;
+    cursor: pointer;
+    opacity: 0;
+    animation: polaroidAppear 1s forwards;
+    border: 1px solid #f0dce5;
+    border-radius: 4px;
+}
+
+.polaroid:nth-child(1) { animation-delay: 0.2s; transform: rotate(-2deg); }
+.polaroid:nth-child(2) { animation-delay: 0.4s; transform: rotate(1.5deg); }
+.polaroid:nth-child(3) { animation-delay: 0.6s; transform: rotate(-1.5deg); }
+.polaroid:nth-child(4) { animation-delay: 0.8s; transform: rotate(2deg); }
+.polaroid:nth-child(5) { animation-delay: 1s; transform: rotate(-1deg); }
+.polaroid:nth-child(6) { animation-delay: 1.2s; transform: rotate(1deg); }
+
+@keyframes polaroidAppear {
+    from { opacity: 0; transform: translateY(40px) rotate(0deg); }
+    to { opacity: 1; }
+}
+
+.polaroid:hover {
+    transform: rotate(0deg) scale(1.08) translateY(-10px);
+    box-shadow: 0 20px 50px rgba(194, 123, 160, 0.35);
+    z-index: 10;
+}
+
+.polaroid img {
+    width: 100%;
+    max-width: 250px;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+    filter: sepia(0.15) contrast(1.05);
+    border-radius: 2px;
+}
+
+.polaroid-caption {
+    font-family: 'Caveat', cursive;
+    font-size: 1.3rem;
+    color: #8a5a6e;
+    text-align: center;
+    margin-top: 12px;
+}
+
+.wishes-container {
+    max-width: 800px;
+    width: 100%;
+    padding: 20px;
+}
+
+.wish-card {
+    background: #fff;
+    border: 2px solid #c27ba0;
+    padding: 35px;
+    margin: 30px 0;
+    box-shadow: 0 12px 35px rgba(194, 123, 160, 0.12);
+    opacity: 0;
+    animation: slideInWish 1s forwards;
+    position: relative;
+    border-radius: 8px;
+}
+
+.wish-card::before {
+    content: '';
+    position: absolute;
+    top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px dashed #c27ba0;
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+@keyframes slideInWish {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.wish-card:nth-child(1) { animation-delay: 0.3s; }
+.wish-card:nth-child(2) { animation-delay: 0.6s; }
+.wish-card:nth-child(3) { animation-delay: 0.9s; }
+.wish-card:nth-child(4) { animation-delay: 1.2s; }
+.wish-card:nth-child(5) { animation-delay: 1.5s; }
+
+.wish-icon {
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+    display: block;
+}
+
+.wish-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: #a85d7c;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.wish-text {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #5a2d3e;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.envelope-container {
+    perspective: 1000px;
+    margin: 40px 0;
+}
+
+.envelope {
+    width: 340px;
+    height: 230px;
+    background: linear-gradient(135deg, #e8c4d4, #d4a5b9);
+    position: relative;
+    cursor: pointer;
+    transition: all 0.6s ease;
+    box-shadow: 0 20px 50px rgba(194, 123, 160, 0.3);
+    border: 2px solid #c27ba0;
+    border-radius: 4px;
+}
+
+.envelope:hover {
+    transform: translateY(-12px) rotate(-1.5deg);
+}
+
+.envelope-flap {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 50%;
+    background: linear-gradient(135deg, #d4a5b9, #c289a1);
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transition: transform 1s ease;
+    transform-origin: top;
+    z-index: 2;
+    border-bottom: 2px solid #c27ba0;
+}
+
+.envelope.opened .envelope-flap {
+    transform: rotateX(180deg);
+}
+
+.envelope-seal {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 70px; height: 70px;
+    background: #a85d7c;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: #fff;
+    z-index: 3;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    border: 3px solid #fff;
+}
+
+.letter {
+    display: none;
+    background: #fff;
+    padding: 50px;
+    max-width: 700px;
+    border: 3px solid #c27ba0;
+    box-shadow: 0 20px 60px rgba(194, 123, 160, 0.2);
+    animation: letterUnfold 1.5s ease;
+    position: relative;
+    border-radius: 8px;
+}
+
+.letter::before {
+    content: '';
+    position: absolute;
+    top: 12px; left: 12px; right: 12px; bottom: 12px;
+    border: 1px dashed #c27ba0;
+    pointer-events: none;
+    border-radius: 4px;
+}
+
+@keyframes letterUnfold {
+    from { opacity: 0; transform: translateY(-80px) rotateX(80deg) scale(0.9); }
+    to { opacity: 1; transform: translateY(0) rotateX(0) scale(1); }
+}
+
+.letter-title {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.5rem;
+    color: #a85d7c;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.letter-text {
+    font-size: 1.2rem;
+    line-height: 2;
+    color: #5a2d3e;
+    margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.letter-signature {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #a85d7c;
+    text-align: right;
+    margin-top: 40px;
+}
+
+.final-message {
+    text-align: center;
+    max-width: 700px;
+}
+
+.final-ornament {
+    font-size: 2.5rem;
+    margin: 30px 0;
+    color: #c27ba0;
+    letter-spacing: 20px;
+}
+
+.music-btn {
+    position: fixed;
+    bottom: 30px; right: 30px;
+    width: 65px; height: 65px;
+    border-radius: 50%;
+    background: #c27ba0;
+    border: 3px solid #fff;
+    color: #fff;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 8px 25px rgba(194, 123, 160, 0.4);
+    z-index: 100;
+    display: none;
+    transition: all 0.3s ease;
+}
+
+.music-btn:hover { transform: scale(1.1); }
+.music-btn.playing { animation: musicSpin 3s linear infinite; }
+
+@keyframes musicSpin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .gallery { grid-template-columns: 1fr 1fr; gap: 25px; }
+    .polaroid img { height: 180px; }
+    .retro-card { padding: 30px; }
+    .letter { padding: 30px; }
+    .envelope { width: 290px; height: 200px; }
+    .wish-card { padding: 25px; }
+}
+</style>
+</head>
+<body>
+
+<div class="retro-bg"></div>
+
+<script>
+const elements = ['🌸', '🌹', '✨', '💖'];
+for (let i = 0; i < 15; i++) {
+    const el = document.createElement('div');
+    el.className = 'floating-element';
+    el.textContent = elements[Math.floor(Math.random() * elements.length)];
+    el.style.left = Math.random() * 100 + '%';
+    el.style.top = Math.random() * 100 + '%';
+    el.style.animationDelay = Math.random() * 25 + 's';
+    el.style.animationDuration = (Math.random() * 15 + 20) + 's';
+    document.body.appendChild(el);
+}
+</script>
+
+<div class="screen active" id="screen1">
+    <div class="retro-card">
+        <h1 class="main-title">С Днём Рождения,<br>Кристиша!</h1>
+        <p class="subtitle">Бобер, креветка и самый дорогой человек...</p>
+        <div class="age-card">
+            <div class="age-number">22</div>
+            <div class="age-text">Всё только начинается<br>и я хочу быть рядом всегда</div>
+        </div>
+        <p style="text-align: center; font-style: italic; color: #8a5a6e; margin: 30px 0; font-size: 1.2rem; line-height: 1.8;">
+            Я приготовила для тебя кое-что особенное.<br>
+            Очень старалась и это то что останется навсегда, не промокнет и не потеряется ахах
+        </p>
+        <div style="text-align: center;">
+            <button class="btn" onclick="goToScreen(2)">Открыть подарок</button>
+        </div>
+    </div>
+</div>
+
+<div class="screen" id="screen2">
+    <h2 class="gallery-title">Наши моменты</h2>
+    <p class="subtitle">Открой подарок, я надеюсь что он поможет нам запечатлить еще больше счастливых моментов рядом</p>
+    <div class="gallery">
+        <div class="polaroid"><img src="photo1.jpg" alt="Фото 1"><div class="polaroid-caption">Наше первое фото</div></div>
+        <div class="polaroid"><img src="photo2.jpg" alt="Фото 2"><div class="polaroid-caption">Твоя улыбка</div></div>
+        <div class="polaroid"><img src="photo3.jpg" alt="Фото 3"><div class="polaroid-caption">Первый совместный концерт</div></div>
+        <div class="polaroid"><img src="photo4.jpg" alt="Фото 4"><div class="polaroid-caption">Смешной бобер</div></div>
+        <div class="polaroid"><img src="photo5.jpg" alt="Фото 5"><div class="polaroid-caption">Ты самая красивая</div></div>
+        <div class="polaroid"><img src="photo6.jpg" alt="Фото 6"><div class="polaroid-caption">Хочу чтобы у нас было больше совместных фоток</div></div>
+    </div>
+    <button class="btn" onclick="goToScreen(3)">Читать пожелания</button>
+</div>
+
+<div class="screen" id="screen3">
+    <h2 class="gallery-title">Мои пожелания тебе, котёнок</h2>
+    <div class="wishes-container">
+        <div class="wish-card">
+            <span class="wish-icon">✨</span>
+            <h3 class="wish-title">Пусть всё, о чём ты мечтаешь, сбывается</h3>
+            <p class="wish-text">Кристина, как говорил шляпник. Мечтать нужно о том что невозможно, иначе это просто план на завтрашний день. Мечтай. Не важно, насколько твои идеи большие или маленькие — я буду рядом, чтобы помочь тебе их достигать. Ты заслуживаешь всего самого лучшего, и я сделаю всё, чтобы это у тебя было.</p>
+        </div>
+        <div class="wish-card">
+            <span class="wish-icon">🌸</span>
+            <h3 class="wish-title">Будь всегда счастливой</h3>
+            <p class="wish-text">Я обещаю делать всё, чтобы ты каждый день чувствовала себя самой счастливой. Твоя улыбка самая красивая на свете, true thing. Оставайся солнышком, ты обладаешь восхитительной способностью, заряжать всех вокруг тебя, считаю тебя ангелом и очень сильно хочу ты была счастливаю.</p>
+        </div>
+        <div class="wish-card">
+            <span class="wish-icon">💖</span>
+            <h3 class="wish-title">Любви, нежности и тепла</h3>
+            <p class="wish-text">Пусть твоя жизнь будет наполнена любовью — моей любовью, любовью близких, любовью к себе. Ты самая нежная, самая красивая, самая лучшая. Я люблю тебя не за что-то, а просто за то, что ты есть.</p>
+        </div>
+        <div class="wish-card">
+            <span class="wish-icon">🌹</span>
+            <h3 class="wish-title">Успехов во всём, что ты делаешь</h3>
+            <p class="wish-text">В учёбе, в работе, в творчестве — пусть всё, за что ты берёшься, получается легко и с радостью. Я буду твоим самым преданным фанатом и поддержкой. Верю в тебя больше, чем ты сама, молния маквин! p.s. Звучит как "суда-камон" ахахах</p>
+        </div>
+        <div class="wish-card">
+            <span class="wish-icon">✨</span>
+            <h3 class="wish-title">Здоровья, сил и энергии</h3>
+            <p class="wish-text">Будь здорова, полна сил и энергии. Пусть каждый день приносит тебе радость, новые открытия и прекрасные моменты. Хочу увидеть с тобой весь мир и нам нужно много сил и отсутствие мигрени на это дело хаха.</p>
+        </div>
+    </div>
+    <button class="btn" onclick="goToScreen(4)">Открыть главное письмо</button>
+</div>
+
+<div class="screen" id="screen4">
+    <h2 class="gallery-title">Последний сюрприз...</h2>
+    <p class="subtitle">Нажми на конверт, чтобы открыть моё послание</p>
+    <div class="envelope-container">
+        <div class="envelope" id="envelope" onclick="openEnvelope()">
+            <div class="envelope-flap"></div>
+            <div class="envelope-seal">🌹</div>
+        </div>
+    </div>
+    <div class="letter" id="letter">
+        <h3 class="letter-title">Моей Кристише</h3>
+        <p class="letter-text">С Днём Рождения, самая красивая, самая нежная, самая лучшая девочка на свете!</p>
+        <p class="letter-text">Тебе сегодня 22 года — гуси-лебеди ну или же возраст, когда весь мир лежит у твоих ног. И я хочу, чтобы ты знала: я буду рядом на каждом шагу этого пути.</p>
+        <p class="letter-text">Ты — мой котёнок, мой бобёр, моё всё. Ты делаешь мою жизнь прекраснее просто тем, что ты в ней есть. Твоя улыбка, твой смех, то, как ты дурачишься со мной по вечерам, то как танцуешь и радуешься, то как смотришь на этот мир — всё это моё самое большое счастье.</p>
+        <p class="letter-text">Я люблю тебя за твою доброту, за твою нежность, за то, какая ты настоящая. За то, как ты заботишься о других. Вывод: ты ангел!</p>
+        <p class="letter-text">Обещаю быть рядом в любой день — и в хороший, и в трудный. Обещаю поддерживать все твои мечты и помогать им сбываться. Обещаю любить тебя всё сильнее с каждым днём.</p>
+        <p class="letter-text">Спасибо, что ты есть. Спасибо, что делаешь меня самым счастливым человеком на свете.</p>
+        <p class="letter-text" style="font-size: 1.6rem; margin-top: 35px; font-family: 'Great Vibes', cursive; color: #a85d7c;">С Днём Рождения, любимая!</p>
+        
+        <div style="text-align: center; margin-top: 40px; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <button class="btn" onclick="closeLetter()" style="padding: 12px 35px; font-size: 1.1rem;">Свернуть письмо 💌</button>
+            <button class="btn" onclick="goToScreen(5)" style="padding: 12px 35px; font-size: 1.1rem;">К финальному сюрпризу ✨</button>
+        </div>
+    </div>
+</div>
+
+<div class="screen" id="screen5">
+    <div class="final-message">
+        <h2 class="main-title">Я люблю тебя!</h2>
+        <div class="final-ornament">🌸 🌹 </div>
+        <p class="subtitle" style="font-size: 1.8rem;">Кристина, ты — лучшее, что случилось в моей жизни</p>
+        <p style="font-size: 1.3rem; color: #5a2d3e; margin: 30px 0; line-height: 2; font-family: 'Cormorant Garamond', serif;">
+            Пусть этот день будет наполнен радостью, смехом и любовью.<br>
+            Пусть все мечты сбываются, а я буду рядом, чтобы помочь им сбыться.<br>
+            Ты заслуживаешь всего самого лучшего в этом мире, мой котёнок.
+        </p>
+        <div class="final-ornament">✨ 💖 ✨</div>
+    </div>
+</div>
+
+<button class="music-btn" id="musicBtn" onclick="toggleMusic()">♪</button>
+
+<audio id="audioPlayer" loop>
+    <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function goToScreen(n) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + n).classList.add('active');
+    window.scrollTo(0, 0);
+    
+    if (n === 2) {
+        confetti({ particleCount: 100, spread: 90, origin: { y: 0.6 }, colors: ['#c27ba0', '#e8c4d4', '#fdf6f8', '#a85d7c'] });
+    }
+    if (n === 3) {
+        confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ['#c27ba0', '#e8c4d4', '#fdf6f8'] });
+    }
+    if (n === 4) {
+        setTimeout(() => {
+            confetti({ particleCount: 200, spread: 120, origin: { y: 0.5 }, colors: ['#c27ba0', '#e8c4d4', '#fdf6f8', '#a85d7c'] });
+        }, 500);
+        document.getElementById('musicBtn').style.display = 'block';
+    }
+    if (n === 5) {
+        const duration = 5000;
+        const end = Date.now() + duration;
+        const interval = setInterval(() => {
+            if (Date.now() > end) return clearInterval(interval);
+            confetti({ particleCount: 50, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#c27ba0', '#e8c4d4'] });
+            confetti({ particleCount: 50, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#fdf6f8', '#a85d7c'] });
+        }, 100);
+    }
+}
+
+function openEnvelope() {
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    envelope.classList.add('opened');
+    
+    setTimeout(() => {
+        envelope.style.display = 'none';
+        letter.style.display = 'block';
+        
+        const duration = 4000;
+        const end = Date.now() + duration;
+        const interval = setInterval(() => {
+            if (Date.now() > end) return clearInterval(interval);
+            confetti({ particleCount: 40, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#c27ba0', '#e8c4d4'] });
+            confetti({ particleCount: 40, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#fdf6f8', '#a85d7c'] });
+        }, 50);
+        
+        playMusic(); 
+    }, 1000);
+}
+
+function closeLetter() {
+    const envelope = document.getElementById('envelope');
+    const letter = document.getElementById('letter');
+    
+    letter.style.display = 'none';
+    envelope.style.display = 'block';
+    
+    setTimeout(() => {
+        envelope.classList.remove('opened');
+    }, 100);
+}
+
+let musicPlaying = false;
+const audio = document.getElementById('audioPlayer');
+const btn = document.getElementById('musicBtn');
+
+function playMusic() {
+    if (!musicPlaying) {
+        audio.play().catch(error => console.log("Автовоспроизведение заблокировано браузером, нужно нажать кнопку вручную"));
+        btn.classList.add('playing');
+        btn.textContent = '♫';
+        musicPlaying = true;
+    }
+}
+
+function toggleMusic() {
+    if (!musicPlaying) {
+        audio.play();
+        btn.classList.add('playing');
+        btn.textContent = '♫';
+        musicPlaying = true;
+    } else {
+        audio.pause();
+        btn.classList.remove('playing');
+        btn.textContent = '♪';
+        musicPlaying = false;
+    }
+}
+</script>
+
+</body>
+</html>
